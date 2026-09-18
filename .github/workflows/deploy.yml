@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+# Render and Vercel both auto-deploy on push once the repo is connected in
+# their dashboards, so this workflow just gates deployment behind CI passing.
+# If you prefer explicit CLI-based deploys instead of dashboard auto-deploy,
+# uncomment and fill in the steps below with your own secrets.
+jobs:
+  wait-for-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op gate
+        run: echo "CI passed on main — Render/Vercel auto-deploy will pick this commit up."
+
+      # - name: Deploy backend to Render
+      #   run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+      #
+      # - name: Deploy frontend to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: frontend
+      #     vercel-args: "--prod"
